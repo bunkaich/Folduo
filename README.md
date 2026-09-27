@@ -114,6 +114,12 @@ The wrapper pins Gradle 9.5.1 and verifies its checksum. AGP is 9.2.1; compile S
 
 The release APK uses the existing experimental debug signing certificate. Signing keys are not published. Your own build uses your local certificate and cannot directly replace the release APK. Stop and uninstall the existing app before switching signatures; settings and permissions will need to be configured again. Uninstalling does not restore the wallpaper.
 
+### Build with GitHub Actions
+
+If you do not have a local Android build environment, push to a fork on GitHub, or run **Actions → Build → Run workflow**. The workflow installs JDK 17 and the Android SDK packages above, runs the same Gradle command and builds the wallpaper helper. Download `Folduo-apk` (APK and `SHA256SUMS`) and `folduo-wallpaper-setup` from the run's **Artifacts**.
+
+Each run signs the APK with a new temporary debug key, so installing a later run's APK over an earlier one fails with a signature mismatch. Stop and uninstall the app first, then configure settings and permissions again.
+
 Release downloads include `SHA256SUMS`. Compare the APK with `shasum -a 256 Folduo-0.1.21.apk` on macOS or `sha256sum Folduo-0.1.21.apk` on Linux.
 
 ## Screen access
