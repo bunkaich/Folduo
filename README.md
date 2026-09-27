@@ -12,7 +12,7 @@ An experimental Galaxy Z Fold7 app that uses hinge angle to create a frosted-gla
 
 ## Requirements
 
-- **Galaxy Z Fold7 SM-F966Z only.** Display control is disabled on other models.
+- **Galaxy Z Fold7 SM-F966Z or SM-F966N only.** Display control is disabled on other models. SM-F966N (Korea) is the same hardware as SM-F966Z (Japan); it is enabled in source but has not been verified on a physical device, and the v0.1.21 release APK and wallpaper helper still accept SM-F966Z only. On SM-F966N, [build both from source](#build-from-source) without checking out the `v0.1.21` tag.
 - Tested on Android 16 / One UI 8.5, build `F966ZSCS1BZH4`.
 - [Shizuku](https://shizuku.rikka.app/guide/setup/), installed and running. Tested with `13.6.0.r1086.2650830c`.
 - The supported Samsung stock interactive wallpaper, configured as described below.

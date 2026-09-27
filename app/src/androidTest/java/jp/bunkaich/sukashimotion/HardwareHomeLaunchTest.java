@@ -55,7 +55,7 @@ public class HardwareHomeLaunchTest {
         return null;
     }
     @Test public void realInnerHomeLaunchesSelectedAppsAndKeepsLongPress() throws Exception {
-        Assume.assumeTrue("true".equals(InstrumentationRegistry.getArguments().getString("folduoHardware")) && "SM-F966Z".equals(Build.MODEL));
+        Assume.assumeTrue("true".equals(InstrumentationRegistry.getArguments().getString("folduoHardware")) && SupportedDevice.current());
         var instrumentation=InstrumentationRegistry.getInstrumentation();
         Context context=instrumentation.getTargetContext();
         boolean enabled=MotionSettings.enabled(context);

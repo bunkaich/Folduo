@@ -6,10 +6,13 @@ import android.content.Context;
 import android.os.*;
 import java.io.*;
 import java.lang.reflect.Method;
+import java.util.Set;
 
-/** Optional, explicit ADB setup for the tested Fold7; changes front HOME only. */
+/** Optional, explicit ADB setup for a supported Fold7; changes front HOME only. */
 public final class CoverWallpaperSetup {
     private static final int COVER_HOME = 17;
+    /** Same list as the app's SupportedDevice: SM-F966Z (Japan, tested) and SM-F966N (Korea). */
+    private static final Set<String> MODELS = Set.of("SM-F966Z", "SM-F966N");
     private static final String RESOURCE_PACKAGE = "com.samsung.android.wallpaper.res";
     private static final String STOCK_URI = "android.resource://" + RESOURCE_PACKAGE + "/drawable/sub_wallpaper_002.png";
     private static final ComponentName LIVE = new ComponentName("com.samsung.android.wallpaper.live",
@@ -29,8 +32,8 @@ public final class CoverWallpaperSetup {
         String action = args.length == 0 ? "status" : args[0];
         if (!action.equals("status") && !action.equals("apply") && !action.equals("restore-stock"))
             throw new IllegalArgumentException("Use status, apply, or restore-stock");
-        if (android.os.Process.myUid() != 2000 || !"SM-F966Z".equals(Build.MODEL))
-            throw new IllegalStateException("This setup is limited to ADB shell on the tested SM-F966Z");
+        if (android.os.Process.myUid() != 2000 || Build.MODEL == null || !MODELS.contains(Build.MODEL))
+            throw new IllegalStateException("This setup is limited to ADB shell on a supported Fold7 " + MODELS);
         Looper.prepareMainLooper();
         Class<?> at = Class.forName("android.app.ActivityThread");
         Object thread = at.getMethod("systemMain").invoke(null);

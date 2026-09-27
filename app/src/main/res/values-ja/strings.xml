@@ -25,10 +25,10 @@
     <string name="sensors_title">センサーの確認</string>
     <string name="probe_sensors">5秒間センサーを調べる</string>
     <string name="not_measured">まだ実測していません</string>
-    <string name="device_note">Fold7 SM-F966Z向け・実機で調整中</string>
+    <string name="device_note">Fold7 SM-F966Z・SM-F966N向け・実機で調整中</string>
     <string name="need_overlay">先に「重ねて表示」を許可してください</string>
     <string name="need_shizuku">先にShizukuを接続してください</string>
-    <string name="unsupported_device">この版の画面制御はFold7 SM-F966Z向けです。見え方のデモは利用できます</string>
+    <string name="unsupported_device">この版の画面制御はFold7 SM-F966Z・SM-F966N向けです。見え方のデモは利用できます</string>
     <string name="close_to_prepare">一度閉じると準備が完了します</string>
     <string name="probe_running">購読と受信件数を確認しています…端末を少し動かしてください</string>
     <string name="nav_recents">最近使ったアプリ</string>
@@ -144,7 +144,7 @@
     <string name="err_monitor_inactive">開閉待機が有効ではありません</string>
     <string name="err_inner_unavailable">内側の操作を利用できません</string>
     <string name="err_unsupported_action">未対応の操作です</string>
-    <string name="err_wrong_model">この版はFold7 SM-F966Z向けです</string>
+    <string name="err_wrong_model">この版はFold7 SM-F966Z・SM-F966N向けです</string>
     <string name="err_states_unavailable">両画面の同時点灯に対応した状態を利用できません</string>
     <string name="err_unexpected_caller">許可されていない呼び出し元です</string>
     <string name="err_angle_stopped">角度の取得は停止しています</string>

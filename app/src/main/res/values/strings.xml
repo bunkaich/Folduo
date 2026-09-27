@@ -26,10 +26,10 @@
     <string name="sensors_title">Sensor diagnostics</string>
     <string name="probe_sensors">Check sensors for 5 seconds</string>
     <string name="not_measured">No measurements yet</string>
-    <string name="device_note">For Fold7 SM-F966Z · experimental</string>
+    <string name="device_note">For Fold7 SM-F966Z / SM-F966N · experimental</string>
     <string name="need_overlay">First, allow display over other apps.</string>
     <string name="need_shizuku">Connect Shizuku first.</string>
-    <string name="unsupported_device">Display control in this build is for Fold7 SM-F966Z. You can still try the preview.</string>
+    <string name="unsupported_device">Display control in this build is for Fold7 SM-F966Z / SM-F966N. You can still try the preview.</string>
     <string name="close_to_prepare">Close the phone fully once to finish setup.</string>
     <string name="probe_running">Checking sensor subscriptions and events… Move the phone gently.</string>
     <string name="nav_recents">Recent apps</string>
@@ -145,7 +145,7 @@
     <string name="err_monitor_inactive">Fold monitoring is not active.</string>
     <string name="err_inner_unavailable">Inner screen controls are unavailable.</string>
     <string name="err_unsupported_action">This action is not supported.</string>
-    <string name="err_wrong_model">This build targets Fold7 SM-F966Z</string>
+    <string name="err_wrong_model">This build targets Fold7 SM-F966Z / SM-F966N</string>
     <string name="err_states_unavailable">Concurrent display states unavailable</string>
     <string name="err_unexpected_caller">Unexpected caller</string>
     <string name="err_angle_stopped">Angle session stopped</string>

@@ -10,7 +10,7 @@ final class DualDisplayControl implements AutoCloseable {
     final Object manager,service;final Class<?> requestType,callbackType;final Method request,cancel,read;
     final int innerState,outerState;private Object owned;
     DualDisplayControl()throws Exception{
-        if(!"SM-F966Z".equals(Build.MODEL))throw new UnsupportedOperationException("@folduo/err_wrong_model");
+        if(!SupportedDevice.current())throw new UnsupportedOperationException("@folduo/err_wrong_model");
         Class<?> type=Class.forName("android.hardware.devicestate.DeviceStateManager");
         manager=type.getConstructor().newInstance();int inner=-1,outer=-1;
         for(Object state:(List<?>)type.getMethod("getSupportedDeviceStates").invoke(manager)){
