@@ -69,8 +69,10 @@ public class LanguageTest {
         screen.onActivity(a->assertEquals("en",a.getResources().getConfiguration().getLocales().get(0).getLanguage()));
         select(2,"ja");
         screen.onActivity(a->assertEquals("見え方を試す",a.getString(R.string.preview)));
+        select(3,"ko");
+        screen.onActivity(a->assertEquals("애니메이션 미리 보기",a.getString(R.string.preview)));
         String system=context.getSystemService(LocaleManager.class).getSystemLocales().get(0).getLanguage();
-        select(0,system.equals("ja")?"ja":"en");
+        select(0,system.equals("ja")||system.equals("ko")?system:"en");
         assertTrue(context.getSystemService(LocaleManager.class).getApplicationLocales().isEmpty());
     }
     @Test public void languageChangeUpdatesNotificationWithoutRestartingAngles()throws Exception{

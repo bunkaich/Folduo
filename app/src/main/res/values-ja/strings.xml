@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="language_title">言語 / Language</string>
-    <string name="language_current">言語 / Language: %1$s</string>
+    <string name="language_title">言語 / Language / 언어</string>
+    <string name="language_current">言語 / Language / 언어: %1$s</string>
     <string name="language_system">端末の設定に合わせる</string>
     <string name="language_english">English</string>
     <string name="language_japanese">日本語</string>
+    <string name="language_korean">한국어</string>
     <string name="close">閉じる</string>
     <string name="resume">再開</string>
     <string name="stop">停止</string>

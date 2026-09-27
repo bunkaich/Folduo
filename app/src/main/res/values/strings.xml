@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">Folduo</string>
-    <string name="language_title">Language / 言語</string>
-    <string name="language_current">Language / 言語: %1$s</string>
+    <string name="language_title">Language / 言語 / 언어</string>
+    <string name="language_current">Language / 言語 / 언어: %1$s</string>
     <string name="language_system">System default</string>
     <string name="language_english">English</string>
     <string name="language_japanese">日本語</string>
+    <string name="language_korean">한국어</string>
     <string name="close">Close</string>
     <string name="resume">Resume</string>
     <string name="stop">Stop</string>

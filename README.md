@@ -21,7 +21,7 @@ No root required. Once set up, it can run without USB if Shizuku is started thro
 
 ## Setup
 
-Folduo supports English and Japanese. At the top of the app, tap **Language / 言語** and choose **English**, **日本語**, or **System default**. The choice is saved and also appears in Android’s app language settings. Japanese devices use Japanese by default; other devices use English.
+Folduo supports English, Japanese and Korean. At the top of the app, tap **Language / 言語 / 언어** and choose **English**, **日本語**, **한국어**, or **System default**. The choice is saved and also appears in Android’s app language settings. Japanese and Korean devices use their own language by default; other devices use English.
 
 ### 1. Start Shizuku
 
