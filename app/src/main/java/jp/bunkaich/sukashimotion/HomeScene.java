@@ -45,6 +45,7 @@ final class HomeScene extends FrameLayout {
         if(inner){canvas.save();canvas.translate(today.getLeft(),today.getTop());today.draw(canvas);canvas.restore();}
         canvas.save();canvas.translate(primary.getLeft(),primary.getTop());primary.draw(canvas);canvas.restore();return bitmap;
     }
+    void setPhoto(Bitmap photo){wallpaper.photo=photo;wallpaper.invalidate();contentRevision++;}
     void setFold(boolean isInner,float effect) {setFold(isInner,effect,reverse);}
     void setFold(boolean isInner,float effect,boolean reversed) {
         if(inner!=isInner||reverse!=reversed){inner=isInner;reverse=reversed;requestLayout();wallpaper.inner=inner;wallpaper.reverse=reverse;wallpaper.invalidate();}
@@ -160,10 +161,18 @@ final class HomeScene extends FrameLayout {
     static final class Wallpaper extends View {
         final Paint paint=new Paint(3);final Path path=new Path();boolean inner,reverse;
         LinearGradient sky,dune,foreground,veil;float cachedFull=-1,cachedHeight=-1;
+        Bitmap photo;final Matrix matrix=new Matrix();final Paint photoPaint=new Paint(Paint.FILTER_BITMAP_FLAG);
         Wallpaper(Context c){super(c);setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_NO);}
         @Override protected void onDraw(Canvas c){
-            float h=getHeight(),full=inner?getWidth():getWidth()*2f; c.save();if(!inner&&!reverse)c.translate(-getWidth(),0);
+            float h=getHeight(),full=inner?getWidth():getWidth()*2f;
             if(cachedFull!=full||cachedHeight!=h){rebuildGradients(full,h);}
+            if(photo!=null){
+                // Fill each screen from the photo's centre, so the subject is not split across the fold.
+                float scale=Math.max(getWidth()/(float)photo.getWidth(),h/photo.getHeight());
+                matrix.setScale(scale,scale);matrix.postTranslate((getWidth()-photo.getWidth()*scale)/2f,(h-photo.getHeight()*scale)/2f);
+                c.drawBitmap(photo,matrix,photoPaint);paint.setShader(veil);c.drawRect(0,0,getWidth(),h,paint);paint.setShader(null);return;
+            }
+            c.save();if(!inner&&!reverse)c.translate(-getWidth(),0);
             paint.setShader(sky);c.drawRect(0,0,full,h,paint);
             path.reset();path.moveTo(-full*.3f,h*.88f);path.cubicTo(full*.18f,h*.18f,full*.38f,h*1.05f,full*1.15f,h*.38f);path.lineTo(full*1.2f,h*1.1f);path.lineTo(-full*.3f,h*1.1f);path.close();
             paint.setShader(dune);c.drawPath(path,paint);

@@ -173,5 +173,10 @@
     <string name="home_launch_unconfirmed">選択したアプリの起動を確認できませんでした。</string>
     <string name="home_open">Folduoのホームを開く</string>
     <string name="home_default">Folduoをホームアプリにする</string>
+    <string name="home_background_choose">Folduoホームの背景写真を選ぶ</string>
+    <string name="home_background_reset">Folduoホームの背景を標準に戻す</string>
+    <string name="home_background_saved">背景を保存しました。Folduoホームに表示されます。</string>
+    <string name="home_background_failed">この画像を使えませんでした：%1$s</string>
+    <string name="home_background_cleared">Folduoホームの背景を標準に戻しました。</string>
     <string name="home_setup">Folduoのホーム画面も使えます。開閉演出が有効なときは、選んだアプリを操作中の画面へ表示します。アイコンは長押しで入れ替えられます。</string>
 </resources>

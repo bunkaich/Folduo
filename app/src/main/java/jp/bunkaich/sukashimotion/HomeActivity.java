@@ -21,6 +21,7 @@ public final class HomeActivity extends Activity implements HomeScene.Actions {
     private List<AppCatalog.App> apps = List.of();
     private AlertDialog drawer;
     private boolean started, launching;
+    private long backgroundStamp = -1;
 
     @Override public void onCreate(Bundle state) {
         super.onCreate(state);
@@ -56,7 +57,16 @@ public final class HomeActivity extends Activity implements HomeScene.Actions {
 
     @Override protected void onStart() {
         super.onStart(); started = true;
-        refreshApps(); main.post(clock);
+        refreshApps(); main.post(clock); refreshBackground();
+    }
+    private void refreshBackground() {
+        long stamp = HomeBackground.stamp(this);
+        if (stamp == backgroundStamp) return;
+        backgroundStamp = stamp;
+        worker.execute(() -> {
+            android.graphics.Bitmap photo = HomeBackground.load(this);
+            main.post(() -> { if (!isDestroyed()) scene.setPhoto(photo); });
+        });
     }
     @Override protected void onResume() {
         super.onResume();

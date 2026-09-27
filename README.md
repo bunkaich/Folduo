@@ -76,6 +76,8 @@ The cover screen uses Samsung's normal navigation. The inner screen has a small 
 
 To use the included launcher, tap **Use Folduo as the home app** in Folduo settings and select Folduo. Tap an icon to open an app, long-press to replace it, or use **All apps** to browse installed apps. Tap the **Folduo** button on the home screen to return to settings. English and Japanese are supported.
 
+Folduo home draws its own background. To use your own picture, tap **Choose a Folduo home background photo** in Folduo settings; a downscaled copy is kept in the app's private storage and never uploaded. **Use the default Folduo home background** removes it. On SM-F966N, while the animation is active the inner screen is a secondary display with no system wallpaper, so One UI Home and other launchers show a black background there.
+
 On the tested Fold7, Samsung redirects new app launches from the inner display to the cover display. Folduo home moves only the selected app to the inner display and restores the selected home when returning. This does not fix other launchers.
 
 Three Calculator/home round trips, moving the home between both displays, long-press selection and opening settings passed on the phone with both displays held on by the helper. The final check with physical folding is still pending. If an app does not open after unfolding, close the phone and launch it from the cover home screen.

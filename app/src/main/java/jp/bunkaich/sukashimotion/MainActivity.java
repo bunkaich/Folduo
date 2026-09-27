@@ -34,6 +34,8 @@ public final class MainActivity extends Activity {
             if(roles.isRoleHeld(android.app.role.RoleManager.ROLE_HOME))openHome();
             else startActivityForResult(roles.createRequestRoleIntent(android.app.role.RoleManager.ROLE_HOME),9);
         });
+        button(page,getString(R.string.home_background_choose),this::chooseBackground);
+        button(page,getString(R.string.home_background_reset),()->{HomeBackground.clear(this);Toast.makeText(this,getString(R.string.home_background_cleared),Toast.LENGTH_SHORT).show();});
         label(page,getString(R.string.inner_controls_title),21,Color.WHITE);
         label(page,getString(R.string.inner_controls_body),14,0xffc5d3cd);
         label(page,getString(R.string.setup_title),21,Color.WHITE);
@@ -67,6 +69,21 @@ public final class MainActivity extends Activity {
         if(checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS)!=android.content.pm.PackageManager.PERMISSION_GRANTED)requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS},8);
         BridgeConnection.connect(this);MotionSettings.setEnabled(this,true);startForegroundService(new Intent(this,MotionService.class).setAction(MotionService.running?"restart":"start"));
         Toast.makeText(this,getString(R.string.close_to_prepare),Toast.LENGTH_LONG).show();finish();
+    }
+    private void chooseBackground(){
+        try{startActivityForResult(new Intent(android.provider.MediaStore.ACTION_PICK_IMAGES).setType("image/*"),10);}
+        catch(ActivityNotFoundException e){startActivityForResult(new Intent(Intent.ACTION_GET_CONTENT).addCategory(Intent.CATEGORY_OPENABLE).setType("image/*"),10);}
+    }
+    @Override protected void onActivityResult(int request,int result,Intent data){
+        super.onActivityResult(request,result,data);
+        if(request!=10||result!=RESULT_OK||data==null||data.getData()==null)return;
+        Uri uri=data.getData();Context app=getApplicationContext();
+        new Thread(()->{
+            String message;
+            try{HomeBackground.save(app,uri);message=app.getString(R.string.home_background_saved);}
+            catch(Exception e){message=app.getString(R.string.home_background_failed,String.valueOf(e.getLocalizedMessage()));}
+            String text=message;handler.post(()->Toast.makeText(app,text,Toast.LENGTH_LONG).show());
+        },"home-background").start();
     }
     private void probe(int attempt){
         if(probing)return;

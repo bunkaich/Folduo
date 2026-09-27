@@ -174,5 +174,10 @@
     <string name="home_launch_unconfirmed">The selected app did not appear in time.</string>
     <string name="home_open">Open Folduo home</string>
     <string name="home_default">Use Folduo as the home app</string>
+    <string name="home_background_choose">Choose a Folduo home background photo</string>
+    <string name="home_background_reset">Use the default Folduo home background</string>
+    <string name="home_background_saved">Background saved. It appears on Folduo home.</string>
+    <string name="home_background_failed">Could not use this image: %1$s</string>
+    <string name="home_background_cleared">Folduo home uses the default background.</string>
     <string name="home_setup">Folduo includes a home screen with app icons. While fold animation is active, it opens selected apps on the screen you are using. Long-press an icon to change it.</string>
 </resources>
