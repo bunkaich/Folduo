@@ -44,6 +44,8 @@ python3 cover-wallpaper.py apply
 
 `status` は確認だけ、`apply` は前面ホームの変更です。ロック画面は変えません。ADBが見つからない場合は `--adb /path/to/adb`、複数台接続時は `--serial 対象端末のシリアル` を追加できます。
 
+`status` は各壁紙のコンポーネントと動画ファイル名も表示します。内側ホームは `video=video_002.mp4` である必要があります。SM-F966Nではその壁紙を選ぶと、前面は `sub_wallpaper_002` ではなくSamsung純正のレイヤー壁紙（`LayeredWallpaperService`）になります。`apply` はこの状態にも対応します。後で戻す場合は設定で選び直してください。`restore-stock` は純正静止画像を設定します。
+
 補助は未対応の壁紙やカスタム壁紙への上書きを拒否します。`other wallpaper` や `Expected inner angle-aware wallpaper unavailable` が出る場合、前提の壁紙が設定されていません。端末に元からある素材を使うため、Samsungの壁紙データは配布物に含みません。
 
 補助も自分でビルドする場合は、[ビルド環境](#ソースからビルドする)を用意し、リポジトリのルートで実行してください。

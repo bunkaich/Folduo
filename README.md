@@ -44,6 +44,8 @@ python3 cover-wallpaper.py apply
 
 `status` checks the wallpaper without changing it. `apply` changes the cover home wallpaper only, not the lock screen. Add `--adb /path/to/adb` if ADB is not on your PATH, or `--serial DEVICE_SERIAL` if multiple devices are connected.
 
+`status` also prints each wallpaper's component and video file name; the inner home must show `video=video_002.mp4`. On SM-F966N, choosing that wallpaper puts Samsung's layered stock wallpaper (`LayeredWallpaperService`) on the cover instead of `sub_wallpaper_002`; `apply` accepts it too. To return to it later, choose it again in Settings, because `restore-stock` sets the stock image instead.
+
 The helper refuses to overwrite unsupported or custom wallpapers. If it reports `other wallpaper` or `Expected inner angle-aware wallpaper unavailable`, the required wallpaper is not configured. It uses assets already installed on your phone; no Samsung wallpaper files are included here.
 
 To build the helper yourself, prepare the [build environment](#build-from-source), then run from the repository root:

@@ -14,6 +14,9 @@ public final class CoverWallpaperSetup {
     private static final String STOCK_URI = "android.resource://" + RESOURCE_PACKAGE + "/drawable/sub_wallpaper_002.png";
     private static final ComponentName LIVE = new ComponentName("com.samsung.android.wallpaper.live",
             "com.samsung.android.wallpaper.live.fold.FoldInteractive");
+    /** SM-F966N pairs the inner fold video with this stock cover wallpaper instead of the image. */
+    private static final ComponentName LAYERED = new ComponentName("com.samsung.android.wallpaper.live",
+            "com.samsung.android.wallpaper.live.layered.LayeredWallpaperService");
 
     public static void main(String[] args) {
         try { run(args); System.exit(0); }
@@ -23,6 +26,12 @@ public final class CoverWallpaperSetup {
     private static boolean angleVideo(Bundle extras) {
         return extras != null && extras.getBundle("serviceSettings") != null
                 && "video_002.mp4".equals(extras.getBundle("serviceSettings").getString("filename"));
+    }
+
+    private static String describe(WallpaperInfo info, Bundle extras) {
+        Bundle settings = extras == null ? null : extras.getBundle("serviceSettings");
+        return (info == null ? "static image" : info.getComponent().flattenToShortString())
+                + ", video=" + (settings == null ? "-" : settings.getString("filename"));
     }
 
     private static void run(String[] args) throws Exception {
@@ -45,17 +54,31 @@ public final class CoverWallpaperSetup {
                 "com.android.systemui.wallpapers.ImageWallpaper".equals(info.getComponent().getClassName()));
         boolean live = info != null && LIVE.equals(info.getComponent())
                 && angleVideo((Bundle) getExtras.invoke(manager, COVER_HOME, 0));
-        System.out.println("Cover home: " + (live ? "angle-aware stock video" : stock ? "original stock image" : "other wallpaper"));
+        boolean layered = info != null && LAYERED.equals(info.getComponent());
+        System.out.println("Cover home: " + (live ? "angle-aware stock video" : stock ? "original stock image"
+                : layered ? "stock layered wallpaper" : "other wallpaper"));
+        // Details help pick the matching stock wallpaper; they never affect what is changed.
+        try {
+            Method getInfo = WallpaperManager.class.getMethod("getWallpaperInfo", int.class, int.class);
+            System.out.println("  " + describe(info, (Bundle) getExtras.invoke(manager, COVER_HOME, 0)) + ", uri=" + uri);
+            Bundle innerExtras = (Bundle) getExtras.invoke(manager, 5, 0);
+            System.out.println("Inner home: " + (angleVideo(innerExtras) ? "angle-aware stock video" : "other wallpaper"));
+            System.out.println("  " + describe((WallpaperInfo) getInfo.invoke(manager, 5, 0), innerExtras));
+        } catch (Exception error) { System.out.println("  Details unavailable: " + error); }
         if (action.equals("status")) return;
-        if ((!stock && !live)) throw new IllegalStateException("Wallpaper changed since setup; refusing to overwrite it");
+        if (!stock && !live && !(layered && action.equals("apply")))
+            throw new IllegalStateException("Cover home is not the expected stock wallpaper; refusing to overwrite it");
         if (action.equals("apply") && live || action.equals("restore-stock") && stock) {
             System.out.println("Already configured; no change made"); return;
         }
-        Context resources = context.createPackageContext(RESOURCE_PACKAGE, 0);
-        int id = resources.getResources().getIdentifier("sub_wallpaper_002", "drawable", RESOURCE_PACKAGE);
-        if (id == 0) throw new IllegalStateException("Original stock image unavailable; no change made");
-        byte[] bytes;
-        try (InputStream input = resources.getResources().openRawResource(id)) { bytes = input.readAllBytes(); }
+        // The stock image is what restore-stock writes back. A layered cover is restored from Settings instead.
+        byte[] bytes = null;
+        if (!layered) {
+            Context resources = context.createPackageContext(RESOURCE_PACKAGE, 0);
+            int id = resources.getResources().getIdentifier("sub_wallpaper_002", "drawable", RESOURCE_PACKAGE);
+            if (id == 0) throw new IllegalStateException("Original stock image unavailable; no change made");
+            try (InputStream input = resources.getResources().openRawResource(id)) { bytes = input.readAllBytes(); }
+        }
         IBinder binder = (IBinder) Class.forName("android.os.ServiceManager").getMethod("getService", String.class)
                 .invoke(null, "wallpaper");
         Object remote = Class.forName("android.app.IWallpaperManager$Stub").getMethod("asInterface", IBinder.class)
@@ -74,6 +97,7 @@ public final class CoverWallpaperSetup {
             if (setter == null) throw new IllegalStateException("Expected wallpaper setter unavailable");
             setter.invoke(remote, builder.build(), context.getPackageName(), COVER_HOME, 0, inner);
             System.out.println("Applied angle-aware stock video to front HOME only");
+            if (layered) System.out.println("To return to the layered cover wallpaper, choose it again in Settings");
         } else {
             Method setter = null;
             for (Method method : api.getMethods())
